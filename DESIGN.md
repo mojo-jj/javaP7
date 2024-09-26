@@ -906,7 +906,7 @@ Netty中的ByteBuf
 
 **tcache 是每个线程私有的缓存**，tcache 每次从 arena 申请一批内存，在分配内存时首先在 tcache 查找，避免锁竞争，分配失败才会通过 run 执行内存分配。
 
-![image-20210504175101232](/Users/suhongliu/Library/Application Support/typora-user-images/image-20210504175101232.png)
+![image-20211205121406792](https://tva1.sinaimg.cn/large/008i3skNly1gx2u1jn9b3j31e80hqjt5.jpg)
 
 Small 场景，如果请求分配内存的大小小于 arena 中的最小的 bin，那么优先从线程中对应的 tcache 中进行分配。首先确定查找对应的 tbin 中是否存在缓存的内存块，如果存在则分配成功，否则找到 tbin 对应的 arena，从 arena 中对应的 bin 中分配 region 保存在 tbin 的 avail 数组中，最终从 availl 数组中选取一个地址进行内存分配，当内存释放时也会将被回收的内存块进行缓存。
 
@@ -1309,6 +1309,7 @@ def backtrack(路径, 选择列表):
 「**剪枝**」第 **46** 题 全排列 第 **47** 题 全排列②
 
 ```python
+# 剪枝
 def backtrack(temp_list, length):
     if length == n:
       res.append(temp_list)
@@ -1324,6 +1325,7 @@ def backtrack(temp_list, length):
   	第 **39 **题 组合 | 第 **40** 题 组合②  | 第 **216** 题 组合③
 
 ```python
+# 索引遍历
 def helper1(idx, n, temp_list):
   if temp_list not in res:
     res.append(temp_list)
@@ -1331,9 +1333,10 @@ def helper1(idx, n, temp_list):
     helper1(i + 1, n, temp_list + [nums[i]])
 ```
 
-「**资源消耗**」第 **22** 题 夸号生成
+「 **资源消耗**」第 **22** 题 夸号生成
 
 ```python
+# 资源消耗
 def backtrack(S, L, R):
   if not L and not R:
     ans.append(''.join(S))
@@ -1345,6 +1348,7 @@ def backtrack(S, L, R):
 「**资源消耗**」第 **93** 题 复原IP
 
 ```python
+资源消耗
 def backtrack(i, tmp, flag):
   if i == n and flag == 0:
     res.append(tmp[:-1])
@@ -1359,6 +1363,7 @@ def backtrack(i, tmp, flag):
 「**资源消耗**」第 **17** 题 电话号码
 
 ```python
+# 资源消耗
 def dfs(path, remains):
   if not remains:
     res.append(path[:])
@@ -1379,6 +1384,7 @@ def dfs(pth,idx):
 「**多重限制**」第 **37** 题 解数独  | 第 **51** 题 N皇后
 
 ```python
+# 多重限制
 def backtrack(pos):
   if pos == n:
     return True
@@ -1397,6 +1403,7 @@ def backtrack(pos):
 「**递归**」第 **10** 题 正则匹配
 
 ```python
+# 递归
 def isMatch(self, s: str, p: str) -> bool:
   if not p: 
     return not s
@@ -1410,7 +1417,8 @@ def isMatch(self, s: str, p: str) -> bool:
 ### 【并查集模板】
 
 ```python
-dummy #虚拟节点用以连接某一特征的全部节点，类似于链表的preHead
+#虚拟节点用以连接某一特征的全部节点，类似于链表的preHead
+dummy 
 parent = {}
 size = collections.defaultdict(lambda:1)
 cnt = 0
@@ -1456,6 +1464,7 @@ for e in e2n:
 ### 【拓扑排序模板】
 
 ```python
+# 【拓扑排序模板】
 ins = [0] * n
 ous = collections.defaultdict(list)
 for cur, pre in ps:
@@ -1486,6 +1495,7 @@ for i in range(len(ns):
 「**单调递增**」第 **84** 题 求最大矩形
 
 ```python
+# 第 **84** 题 求最大矩形
 for i in range(len(hs)):
     while s and hs[i] < hs[s[-1]]:
         base = s.pop()
@@ -1499,6 +1509,7 @@ for i in range(len(hs)):
 「**单调递增,考虑剩余**」第 **316** 题 去除重复字符
 
 ```python
+# 第 **316** 题 去除重复字符
 for i,c in enumerate(ss):
     if c not in s:
         while s and c < s[-1] and s[-1] in ss[i:]:
@@ -1509,6 +1520,7 @@ for i,c in enumerate(ss):
 「**单调递减**」第 **42** 题 接雨水
 
 ```python
+# 第 **42** 题 接雨水
 for i in range(len(hgt)):
     while stack and hgt[i] > hgt[stack[-1]]: #递减栈
         base = stack.pop()
@@ -1523,6 +1535,7 @@ for i in range(len(hgt)):
 「**单调递减**」第 **739** 题 每日温度
 
 ```python
+# 第 **739** 题 每日温度
 for i in range(len(T)-1,-1,-1):
     while s and T[s[-1]] <= T[i] :   #递减栈
         s.pop()
@@ -1545,6 +1558,7 @@ bisect.bisect(ps, T, L=0, R=len(ns))
 「**中位返回**」第 **33** 题 搜索旋转排序数组 | 第**374**题 猜数字大小 | 第**69**题  x平方根
 
 ```python
+# 中位返回
 while L <= R:
     M = (L + R) // 2
     if nums[M] == T:
@@ -1558,6 +1572,7 @@ while L <= R:
 「**区域压缩**」第**278**题 第一个错误版本| 第**162**题 寻找峰值 | 第**153**题 寻找数组最小值
 
 ```python
+# 区域压缩
 while L < R:
     M = (L + R) // 2
     if need in s[L:M]:
@@ -1589,6 +1604,7 @@ for i in range(n)
 - 887 鸡蛋掉落
 
   ```python
+  # 鸡蛋掉落
   while cur[K] < N:             # 还剩 j 个蛋 测 ans 次 覆盖多少层
       for j in range(1, K + 1): # 覆盖总层数 碎了 -1 次层数 + 1 + 没碎 -1 次层数
           cur[j] = prev[j - 1] + 1 + prev[j]
@@ -1599,6 +1615,7 @@ for i in range(n)
 - 813 最大平均值分组
 
   ```python
+  # 813 最大平均值分组
   for k in range(K-1):            #循环k次
       for i in range(N):          #每次均依赖上次的结果
           for j in range(i+1, N):
@@ -1608,6 +1625,7 @@ for i in range(n)
 - 410 分割数组最大值
 
   ```python
+  # 410 分割数组最大值
   for k in range(1,K):
       for i in range(N): 
           for j in range(i):
@@ -1619,6 +1637,7 @@ for i in range(n)
 #### 「**经典双串LCS问题**」
 
 ```python
+# 经典双串LCS问题
 dp = [[0] * (M+1) for _ in range(N+1)]
 for i in range(N):
     for j in range(M):
@@ -1634,10 +1653,9 @@ for i in range(N):
 - 1312 最长回文插入次数
 
 ```python
-dp = [[0] * (N) for _ in range(N)]
 # dp[i][j] 代表从 i 到 j 的最长子串满足条件的数量
 # i-- < j++  ==> i 在 0~j 范围内 --
-
+dp = [[0] * (N) for _ in range(N)]
 for j in range(N):
     dp[j][j] = 1
     for i in range(j-1,-1,-1):
@@ -1658,6 +1676,7 @@ for j in range(N):
 [546 移除盒子](***https://leetcode-cn.com/problems/remove-boxes/***)
 
 ```python
+# 区间分治动态规划
 def helper(self, ns: List[int]) :
     N = len(ns)
     dp = [[0] * N for _ in range(N+1)]
@@ -1671,6 +1690,7 @@ def helper(self, ns: List[int]) :
 「**卡特兰数**」
 
 ```python
+# 卡特兰数
 g(n) = g(0)*g(n-1) + g(1)*g(n-2) ...g(n-1)*g(0)
 dp=[1] + [0] * n
 for i in range(1,n+1):
@@ -1737,7 +1757,8 @@ return res
 325 最长和为k 子数组
 
 ```python
-psd = {0: -1}   # 前缀和初始化
+# 前缀和初始化
+psd = {0: -1}  
 for i in range(len(s)):
     t ^= cd.get(s[i], 0) # 业务逻辑
     if t not in psd:
@@ -1750,9 +1771,10 @@ for i in range(len(s)):
 
 560 和为K的子数组数量
 
-1248 统计优美子数组
+ 统计优美子数组
 
 ```python
+# 累加和存数量
 psd = {0:1}
 for i in range(len(ns)):
     s += ns[i]
@@ -1768,6 +1790,7 @@ for i in range(len(ns)):
 974 和被k 整除 子数组数量（存数量）
 
 ```python
+# 模K状态前缀和
 psd = {0:-1}
 ans = s = 0
 for i in range(len(ns)):
@@ -1785,6 +1808,7 @@ for i in range(len(ns)):
 - 1074 和为目标值的子矩阵数量 
 
 ```python
+# 矩阵前缀和
 for i in range(m):        #固定左边界
     ps = [0] * n
     for j in range(i, m): #固定右边界
@@ -1807,6 +1831,7 @@ return cnt
 ### 【双指针】
 
 ```python
+# 双指针
 def removeElement(self, ns: List[int], val: int) -> int:
     slow = 0
     n = len(ns)
@@ -2084,9 +2109,8 @@ class Solution:
 
 ### 【广度优先】
 
-「**无向图的遍历**」
-
 ```python
+# 「**无向图的遍历**」
 q = collections.deque([i])
 while q:
     cur = q.popleft()
@@ -2096,9 +2120,8 @@ while q:
             q.append(nxt)
 ```
 
-「**二叉树层序遍历**」
-
 ```python
+# 「**二叉树层序遍历**」
 q = deque([root])
 res = []
 while q :
@@ -2116,9 +2139,10 @@ return res
 
 ### 【图论】
 
-**「Dijkstra最短路径」**
+****
 
 ```python
+#「Dijkstra最短路径」
 dic = collections.defaultdict(list)
 for u, v, w in edges:
     dic[u].append([v, w])
@@ -2623,7 +2647,8 @@ class LRUCache {
         DNode prev;
         DNode next;
         int val;
-        int key;}
+        int key;
+    }
     Map<Integer, DNode> map = new HashMap<>();
     DNode head, tail;
     int cap;
@@ -2632,7 +2657,8 @@ class LRUCache {
         tail = new DNode();
         head.next = tail;
         tail.prev = head;
-        cap = capacity;}
+        cap = capacity;
+    }
     public int get(int key) {
         if (map.containsKey(key)) {
             DNode node = map.get(key);
@@ -2640,7 +2666,9 @@ class LRUCache {
             addToHead(node);
             return node.val;
         } else {
-            return -1;}}
+            return -1;
+        }
+    }
     public void put(int key, int value) {
         if (map.containsKey(key)) {
             DNode node = map.get(key);
@@ -2655,18 +2683,23 @@ class LRUCache {
             map.put(key, newNode);
             if (map.size() > cap) {
                 map.remove(tail.prev.key);
-                removeNode(tail.prev);}}}
+                removeNode(tail.prev);
+            }
+        }
+    }
     public void removeNode(DNode node) {
         DNode prevNode = node.prev;
         DNode nextNode = node.next;
         prevNode.next = nextNode;
-        nextNode.prev = prevNode;}
+        nextNode.prev = prevNode;
+    }
     public void addToHead(DNode node) {
         DNode firstNode = head.next;
         head.next = node;
         node.prev = head;
         node.next = firstNode;
-        firstNode.prev = node;}
+        firstNode.prev = node;
+    }
 }
 
 ```
@@ -3523,8 +3556,6 @@ IP限流 | 验证码 | 单用户 | 单设备 | IMEI | 源IP |均设置规则
 
 
 ### **4、热key问题如何解决？**
-
-
 
 redis集群+本地缓存+限流+key加随机值分布在多个实例中 
 
@@ -4484,31 +4515,30 @@ QPS = 1m，则需要建设一个1000台Web服务器的集群，考虑动态扩�
 3. 通过**领域事件通知机制**和**微服务调用**的推拉结合，将各个子域进行解耦关联
 
    - **核心**：
-     
 - 通讯录 | 短信 | 推送通知 | 支付 | 文件服务
-     
+  
 - **智慧通行**
-   
+  
   > 解决物业多品牌、多系统应用造成的**信息孤岛**，**数据混乱**的问题
-   
+  
   - 人脸门禁 | 可视对讲 | 电梯梯控 | 停车系统 | 访客预约
-   
+  
 - **安全社区**
-   
+  
   > 通过**图像视频识别**、**传感数据采集**，实现**报警联动**和**风险预警**
-   
+  
   - 视频监控 | 周界报警 | 高空抛物 | 跨域追踪
-   
+  
 - **全屋智能**
-   
+  
   > 围绕业主需求，逐步引入社区医疗、社区养老、**社区团购**、**社区家政**等服务
-   
+  
   - 超级面板 | 无线门锁 | 烟感雾感
-   
+  
 - **增值服务**
-   
+  
   > 实现跨品牌的产品体验，支持基于**matrix引擎**的智能生活场景裂变能力
-   
+  
      - 智能充电 | 云广播 | 出入提醒 | 定向投放
 
 
